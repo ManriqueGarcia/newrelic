@@ -40,7 +40,6 @@ for i in $listpolicies; do
   echo "ERROR: PRO-Standard policy exist"
   echo "--------------------------------"
   echo "Policies: $listpolicies"
-  echo "-----------------------"
   policyexist=1
   fi
 done
@@ -68,16 +67,11 @@ fi
 idpolicies=$(curl -X GET 'https://api.newrelic.com/v2/alerts_policies.json' -H "X-Api-Key: b86d2ec293faae411c31b3160819c591" -s -G |jq '.policies[] .id')
 
 
+echo $idpolicies
 
 for id in $idpolicies;do
 
-   alertsconditions=$(curl -X GET https://infra-api.newrelic.com/v2/alerts/conditions?policy_id=${id}  -H "X-Api-Key: b86d2ec293faae411c31b3160819c591" -s -G  | jq '.data[] .name')
+idurl="'https://infra-api.newrelic.com/v2/alerts/conditions?policy_id=$id'"
+curl --request GET --url 'https://infra-api.newrelic.com/v2/alerts/conditions?policy_id=$id'  --header 'content-type: application/json' --header 'x-api-key: b86d2ec293faae411c31b3160819c591'
 
-    if [[ "$alertsconditions" == '"Disk Space Condition"' ]];then
-
-      echo "----------------------------------------------"
-      echo "ERROR: Condition $alertsconditions exist"
-      echo "----------------------------------------------"
-
-    fi
 done
