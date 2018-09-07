@@ -7,7 +7,7 @@ contenttype="'content-type: application/json'"
 listpolicies=""
 
 ## Check if curl is installed 
-
+function check_package() {
 if [ ! -x /usr/bin/curl ]; then
   echo "Please install curl"
   exit 1
@@ -24,6 +24,7 @@ if [ ! -x /usr/bin/python ]; then
   echo "Please install python"
   exit 1
 fi
+}
 
 ## POLICIES FUNCTION
 
